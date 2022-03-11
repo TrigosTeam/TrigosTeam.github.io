@@ -1,4 +1,4 @@
-# Welcome to the GitHub Page of Anna Trigos' Team
+# GitHub Page of Anna Trigos' Team
 
 We are a prostate cancer and spatial analysis computational group based in the Rick Pearson lab at the Peter MacCallum Cancer Centre. 
 
