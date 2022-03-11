@@ -2,7 +2,9 @@
 
 We are a prostate cancer and spatial analysis computational group based in the Rick Pearson lab at the Peter MacCallum Cancer Centre. 
 
-More about our projects: https://www.petermac.org/research/labs/rick-pearson
+[More about our projects](https://www.petermac.org/research/labs/rick-pearson)
+
+[Our Team GitHub](https://github.com/trigosteam)
 
 ## Current team members
 - Yuzhou (Jojo) Feng (bioinformatician)
