@@ -6,6 +6,15 @@ We are a prostate cancer and spatial analysis computational group based in the R
 
 [Our Team GitHub](https://github.com/trigosteam)
 
+## About Anna Trigos
+Postdoctoral Researcher
+
+[Email](mailto:anna.trigos@petermac.org)
+
+[LinkedIn](https://www.linkedin.com/in/anna-trigos/)
+
+[Twitter](https://twitter.com/anna_t_g)
+
 ## Current team members
 - Yuzhou (Jojo) Feng (bioinformatician)
 - Lachlan Cain (bioinformatician)
