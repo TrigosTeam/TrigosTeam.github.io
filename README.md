@@ -1,12 +1,6 @@
-# TrigosTeam.github.io
+# TrigosTeam Github Homepage
 
 # Multilanguage README Pattern
-[(spaSim](https://github.com/jonatasemidio/multilanguage-readme-pattern/blob/master/README.md)
-[(SPIAT](https://github.com/jonatasemidio/multilanguage-readme-pattern/blob/master/README.pt-br.md)
+[spaSim tutorial](https://github.com/TrigosTeam/TrigosTeam.github.io/edit/main/README.spaSim.md)
+[SPIAT tutorial](https://github.com/jonatasemidio/multilanguage-readme-pattern/blob/master/README.pt-br.md)
 
-
-
-Just another way to enable more than one language in our README.md files.
-
----
-[![how-to](https://img.shields.io/badge/how--to-use-blue.svg)](https://github.com/jonatasemidio/multilanguage-readme-pattern/blob/master/STEPS.md)
