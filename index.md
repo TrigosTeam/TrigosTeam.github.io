@@ -16,12 +16,12 @@ Postdoctoral Researcher
 [Twitter](https://twitter.com/anna_t_g)
 
 ## Current team members
-- Yuzhou (Jojo) Feng (bioinformatician)
-- Lachlan Cain (bioinformatician)
-- Sirui (Cathy) Weng (Honours student)
+- Yuzhou (Jojo) Feng (Bioinformatician)
+- Lachlan Cain (Bioinformatician)
+- Sirui (Cathy) Weng (PhD student)
+- James Comben (Honours student)
 
 ### Alumni
-- James Comben
 - Tianpei (Tom) Yang
 - Volkan Ozcoban
 - Sophie Rosser
