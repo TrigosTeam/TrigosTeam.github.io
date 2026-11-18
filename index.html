@@ -119,25 +119,6 @@
     color: var(--tissue-text);
     box-shadow: inset 0 0 0 1.5px var(--tissue-soft);
   }
-  .legend {
-    position: absolute;
-    right: 1.5rem;
-    bottom: 1.25rem;
-    z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .4rem 1.1rem;
-    font-size: .8125rem;
-    color: var(--tissue-soft);
-    max-width: calc(100% - 3rem);
-    justify-content: flex-end;
-  }
-  .legend span { display: inline-flex; align-items: center; gap: .4rem; }
-  .dot { width: .7rem; height: .7rem; border-radius: 50%; display: inline-block; flex: none; }
-  .dot.tumour { background: var(--tumour); }
-  .dot.immune { background: var(--immune); }
-  .dot.stroma { background: var(--stroma); }
-  .dot.nuclei { background: var(--nuclei); }
 
   /* Sections */
   section { padding-block: clamp(4rem, 9vw, 7rem); }
@@ -224,7 +205,6 @@
     .about-grid, .team-grid, .projects { grid-template-columns: 1fr; }
     .hero::after { background: rgba(18,22,51,.78); }
     .hero nav { justify-content: flex-start; }
-    .legend { justify-content: flex-start; left: 1.5rem; right: auto; }
     .members li { flex-direction: column; gap: 0; }
     .members .role { text-align: left; }
   }
@@ -251,12 +231,6 @@
       <a class="ghost" href="https://github.com/trigosteam">GitHub</a>
       <a class="ghost" href="mailto:anna.trigos@petermac.org">Email us</a>
     </div>
-  </div>
-  <div class="legend" aria-label="Illustrative spatial map legend">
-    <span><i class="dot tumour"></i>Tumour cells</span>
-    <span><i class="dot immune"></i>Immune cells</span>
-    <span><i class="dot stroma"></i>Stromal cells</span>
-    <span><i class="dot nuclei"></i>Other cells</span>
   </div>
 </header>
 
