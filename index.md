@@ -1,15 +1,10 @@
-<div align="center">
-
 # Anna Trigos Lab
+
 ### Multi-omic Evolution and Ecosystems Lab
 
 **Computational Biology Program · Peter MacCallum Cancer Centre · Melbourne, Australia**
 
-[Lab website](https://www.petermac.org/research/research-programs-and-labs/computational-biology-program/anna-trigos-lab) ·
-[GitHub](https://github.com/trigosteam) ·
-[Email](mailto:anna.trigos@petermac.org)
-
-</div>
+[Lab website](https://www.petermac.org/research/research-programs-and-labs/computational-biology-program/anna-trigos-lab) · [GitHub](https://github.com/trigosteam) · [Email](mailto:anna.trigos@petermac.org)
 
 ---
 
@@ -69,8 +64,4 @@ Yuzhou (Jojo) Feng · Tianpei (Tom) Yang · Volkan Ozcoban · Sophie Rosser · W
 
 ---
 
-<div align="center">
-
 For the latest news, projects and publications, visit the [Anna Trigos Lab page](https://www.petermac.org/research/research-programs-and-labs/computational-biology-program/anna-trigos-lab) at Peter Mac.
-
-</div>
