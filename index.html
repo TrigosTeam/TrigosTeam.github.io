@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anna Trigos Lab | Peter MacCallum Cancer Centre</title>
+<meta name="description" content="The Anna Trigos lab, also known as the Multi-omic Evolution and Ecosystems lab, studies cancer evolution and cancer ecosystems at the Peter MacCallum Cancer Centre.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1d2e;
+    --ink-soft: #4a4f66;
+    --paper: #f6f7fb;
+    --surface: #ffffff;
+    --line: #dde0ea;
+    --tissue: #121633;
+    --tissue-text: #eef0ff;
+    --tissue-soft: #a9afd6;
+    --tumour: #f2b33d;
+    --immune: #e0479e;
+    --stroma: #3cc6c9;
+    --nuclei: #6c86ff;
+    --link: #3b4fd8;
+    --font: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #e8eaf6;
+      --ink-soft: #a6abc7;
+      --paper: #0f1226;
+      --surface: #171b36;
+      --line: #2a2f52;
+      --link: #9aa8ff;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--paper);
+  }
+  a { color: var(--link); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--tumour); outline-offset: 3px; border-radius: 2px; }
+  .wrap { width: min(1120px, 100% - 3rem); margin-inline: auto; }
+
+  /* Hero: an illustrative spatial map of a tumour ecosystem */
+  .hero {
+    position: relative;
+    background: var(--tissue);
+    color: var(--tissue-text);
+    min-height: min(88vh, 760px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .hero canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(18,22,51,.92) 0%, rgba(18,22,51,.7) 45%, rgba(18,22,51,0) 80%);
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .hero nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.75rem;
+    padding-block: 1.5rem;
+  }
+  .hero nav a { color: var(--tissue-text); text-decoration: none; font-weight: 500; }
+  .hero nav a:hover { text-decoration: underline; }
+  .hero-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 3rem 5rem;
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 6.25rem);
+    font-weight: 800;
+    line-height: .95;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    max-width: 10ch;
+  }
+  .hero .subtitle {
+    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+    font-weight: 500;
+    margin: 0 0 .5rem;
+    max-width: 40ch;
+  }
+  .hero .place { color: var(--tissue-soft); margin: 0 0 2.25rem; max-width: 46ch; }
+  .hero-links { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .hero-links a {
+    color: var(--tissue);
+    background: var(--tissue-text);
+    padding: .7rem 1.2rem;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .hero-links a.ghost {
+    background: transparent;
+    color: var(--tissue-text);
+    box-shadow: inset 0 0 0 1.5px var(--tissue-soft);
+  }
+  .legend {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.25rem;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem 1.1rem;
+    font-size: .8125rem;
+    color: var(--tissue-soft);
+    max-width: calc(100% - 3rem);
+    justify-content: flex-end;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .dot { width: .7rem; height: .7rem; border-radius: 50%; display: inline-block; flex: none; }
+  .dot.tumour { background: var(--tumour); }
+  .dot.immune { background: var(--immune); }
+  .dot.stroma { background: var(--stroma); }
+  .dot.nuclei { background: var(--nuclei); }
+
+  /* Sections */
+  section { padding-block: clamp(4rem, 9vw, 7rem); }
+  section + section { border-top: 1px solid var(--line); }
+  h2 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 2.5rem;
+  }
+  h3 { font-size: 1.25rem; line-height: 1.3; margin: 0 0 .6rem; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .lead { font-size: clamp(1.3rem, 2.2vw, 1.55rem); line-height: 1.45; font-weight: 500; margin: 0 0 1.5rem; }
+  .about-grid p { max-width: 62ch; }
+  .about-grid p:not(.lead) { color: var(--ink-soft); }
+  dl { margin: 0; }
+  dl div { padding-block: 1rem; border-top: 1px solid var(--line); }
+  dl div:last-child { border-bottom: 1px solid var(--line); }
+  dt { font-weight: 700; margin-bottom: .2rem; }
+  dd { margin: 0; color: var(--ink-soft); }
+
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .project {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.75rem;
+    border-left: 6px solid var(--accent);
+  }
+  .project p { margin: 0; color: var(--ink-soft); max-width: 60ch; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .head {
+    background: var(--tissue);
+    color: var(--tissue-text);
+    border-radius: 14px;
+    padding: 1.75rem;
+  }
+  .head .role { color: var(--tissue-soft); margin: 0 0 1.25rem; }
+  .head h3 { font-size: 1.6rem; margin: 0 0 .25rem; }
+  .head ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+  .head a { color: var(--tissue-text); font-weight: 500; }
+  .members { list-style: none; margin: 0; padding: 0; }
+  .members li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: .85rem;
+    border-top: 1px solid var(--line);
+  }
+  .members li:last-child { border-bottom: 1px solid var(--line); }
+  .members .name { font-weight: 700; }
+  .members .role { color: var(--ink-soft); text-align: right; }
+  .subgroup { margin-top: 2.5rem; }
+  .subgroup h3 { font-size: 1.05rem; }
+  .subgroup p { margin: 0; color: var(--ink-soft); max-width: 70ch; }
+
+  footer {
+    background: var(--tissue);
+    color: var(--tissue-soft);
+    padding-block: 3rem;
+  }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; }
+  footer p { margin: 0; max-width: 52ch; }
+  footer a { color: var(--tissue-text); }
+
+  @media (max-width: 820px) {
+    .about-grid, .team-grid, .projects { grid-template-columns: 1fr; }
+    .hero::after { background: rgba(18,22,51,.78); }
+    .hero nav { justify-content: flex-start; }
+    .legend { justify-content: flex-start; left: 1.5rem; right: auto; }
+    .members li { flex-direction: column; gap: 0; }
+    .members .role { text-align: left; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <canvas id="tissue" aria-hidden="true"></canvas>
+  <nav class="wrap" aria-label="Main">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#team">Team</a>
+  </nav>
+  <div class="hero-body wrap">
+    <h1>Anna Trigos Lab</h1>
+    <p class="subtitle">Multi-omic Evolution and Ecosystems Lab</p>
+    <p class="place">Computational Biology Program, Peter MacCallum Cancer Centre, Melbourne, Australia</p>
+    <div class="hero-links">
+      <a href="https://www.petermac.org/research/research-programs-and-labs/computational-biology-program/anna-trigos-lab">Visit our Peter Mac page</a>
+      <a class="ghost" href="https://github.com/trigosteam">GitHub</a>
+      <a class="ghost" href="mailto:anna.trigos@petermac.org">Email us</a>
+    </div>
+  </div>
+  <div class="legend" aria-label="Illustrative spatial map legend">
+    <span><i class="dot tumour"></i>Tumour cells</span>
+    <span><i class="dot immune"></i>Immune cells</span>
+    <span><i class="dot stroma"></i>Stromal cells</span>
+    <span><i class="dot nuclei"></i>Other cells</span>
+  </div>
+</header>
+
+<main>
+  <section id="about">
+    <div class="wrap">
+      <h2>About us</h2>
+      <div class="about-grid">
+        <div>
+          <p class="lead">The Anna Trigos lab, also known as the Multi-omic Evolution and Ecosystems lab, focuses on understanding cancer evolution and cancer ecosystems through the analysis of -omics data and the application of computational methods.</p>
+          <p>Cancer cells resist treatment through many strategies, including reprogramming of the transcriptome, epigenome and other molecular layers, and remodelling of the surrounding microenvironment. Our lab investigates how these layers in tumour cells and the microenvironment adapt and co-evolve as an ecosystem to drive progression, resistance and metastasis.</p>
+          <p>Using a computational top-down approach on patient samples from biospecimen programmes and clinical trials, we aim to identify predictive biomarkers and therapeutic vulnerabilities that can be translated to the clinic.</p>
+        </div>
+        <dl>
+          <div><dt>Disease areas</dt><dd>Prostate cancer and multiple myeloma</dd></div>
+          <div><dt>Bulk and single-cell data</dt><dd>Genome sequencing, gene expression, methylation, chromatin accessibility, scRNA-seq and multiome</dd></div>
+          <div><dt>Spatial platforms</dt><dd>Visium, OPAL, MIBI, CODEX and NanoString Digital Spatial Profiling</dd></div>
+          <div><dt>Collaboration</dt><dd>Medical oncologists, nuclear medicine physicians, radiation oncologists and surgeons</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <h2>Current projects</h2>
+      <div class="projects">
+        <article class="project" style="--accent: var(--tumour)">
+          <h3>Profiling multi-omic evolution in cancer</h3>
+          <p>Beyond genetic clonal evolution, genetically identical cells often carry distinct epigenomes. This project examines how tumour cell states arise from the plasticity and interplay of molecular layers and clonal evolution, and how these co-evolve during disease progression and the development of resistance.</p>
+        </article>
+        <article class="project" style="--accent: var(--stroma)">
+          <h3>Understanding how cancer ecosystems enable progression and treatment resistance</h3>
+          <p>Tumours exist within ecosystems of normal and heterogeneous tumour cells. We study how tumour cells adapt their phenotype to the microenvironment, how communication between cells gives rise to specialised tumour populations, and how ecosystem composition changes with treatment and disease progression.</p>
+        </article>
+        <article class="project" style="--accent: var(--immune)">
+          <h3>Methods for analysing the spatial distribution of tumour and microenvironment cells</h3>
+          <p>Cells within tumours are organised in biologically meaningful ways; for example, the proximity of immune cells to tumour cells may reflect active immune recognition. We develop and apply bioinformatics approaches to quantify, compare and simulate such spatial patterns from proteomics and transcriptomics data.</p>
+        </article>
+        <article class="project" style="--accent: var(--nuclei)">
+          <h3>Computational tools for novel and complex data types from patient samples</h3>
+          <p>Patient-derived data often have features that challenge standard bioinformatics workflows, and new platforms continually create opportunities to extract more from the data. We extend what is possible with multi-omic data through tool repurposing and method development.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="wrap">
+      <h2>Our team</h2>
+      <div class="team-grid">
+        <div class="head">
+          <h3>Anna Trigos</h3>
+          <p class="role">Lab Head</p>
+          <ul>
+            <li><a href="mailto:anna.trigos@petermac.org">Email</a></li>
+            <li><a href="https://www.linkedin.com/in/anna-trigos/">LinkedIn</a></li>
+            <li><a href="https://twitter.com/anna_t_g">Twitter</a></li>
+          </ul>
+        </div>
+        <div>
+          <ul class="members">
+            <li><span class="name">Mevan Ekanayake</span><span class="role">Postdoctoral Researcher</span></li>
+            <li><span class="name">Lachlan Cain</span><span class="role">Bioinformatician</span></li>
+            <li><span class="name">David Le</span><span class="role">Bioinformatician</span></li>
+            <li><span class="name">Sirui (Cathy) Weng</span><span class="role">PhD Student</span></li>
+            <li><span class="name">James Comben</span><span class="role">PhD Student</span></li>
+            <li><span class="name">Xiang (Evelyn) Guo</span><span class="role">PhD Student</span></li>
+            <li><span class="name">Yeung-Ae Park</span><span class="role">PhD Student (co-supervised)</span></li>
+            <li><span class="name">Sasuni Hirimuthogoda</span><span class="role">Honours Student</span></li>
+          </ul>
+          <div class="subgroup">
+            <h3>Consumer representatives</h3>
+            <p>Graeme Sissing, Steve Cavill and Geoff Nyssen</p>
+          </div>
+          <div class="subgroup">
+            <h3>Alumni</h3>
+            <p>Yuzhou (Jojo) Feng, Tianpei (Tom) Yang, Volkan Ozcoban, Sophie Rosser, Wei Ni Lim, John Zhu, Mabel Li, Senuri Pannipitiya and Tiana Chimbaikar</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>For the latest news, projects and publications, visit the <a href="https://www.petermac.org/research/research-programs-and-labs/computational-biology-program/anna-trigos-lab">Anna Trigos Lab page</a> at Peter Mac.</p>
+    <p>Peter MacCallum Cancer Centre, Melbourne, Australia</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const canvas = document.getElementById("tissue");
+  const ctx = canvas.getContext("2d");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const colours = { tumour: "#f2b33d", immune: "#e0479e", stroma: "#3cc6c9", nuclei: "#6c86ff" };
+  let cells = [], w = 0, h = 0;
+
+  // Seeded random so the map looks the same on every visit
+  let seed = 7;
+  const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  const gauss = () => { let u = 0, v = 0; while (!u) u = rand(); while (!v) v = rand(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+
+  function build() {
+    seed = 7;
+    cells = [];
+    const area = w * h;
+    const nests = [];
+    const nestCount = Math.max(3, Math.round(area / 140000));
+    for (let i = 0; i < nestCount; i++) {
+      nests.push({ x: w * (0.35 + rand() * 0.65), y: h * rand(), r: 60 + rand() * 90 });
+    }
+    // Tumour nests
+    nests.forEach(n => {
+      const count = Math.round(n.r * 1.6);
+      for (let i = 0; i < count; i++) {
+        cells.push({ type: "tumour", x: n.x + gauss() * n.r * 0.5, y: n.y + gauss() * n.r * 0.5, r: 2.6 + rand() * 1.6 });
+      }
+    });
+    // Stroma as streaks between nests
+    for (let i = 0; i < area / 2600; i++) {
+      const a = rand() * Math.PI;
+      const cx = rand() * w, cy = rand() * h;
+      for (let j = 0; j < 4; j++) {
+        cells.push({ type: "stroma", x: cx + Math.cos(a) * j * 7, y: cy + Math.sin(a) * j * 7, r: 1.4 + rand() * 0.8 });
+      }
+    }
+    // Immune cells, some infiltrating nest edges
+    for (let i = 0; i < area / 3200; i++) {
+      let x, y;
+      if (rand() < 0.45) {
+        const n = nests[Math.floor(rand() * nests.length)];
+        const a = rand() * Math.PI * 2, d = n.r * (0.7 + rand() * 0.5);
+        x = n.x + Math.cos(a) * d; y = n.y + Math.sin(a) * d;
+      } else { x = rand() * w; y = rand() * h; }
+      cells.push({ type: "immune", x, y, r: 2 + rand() * 1.2, vx: (rand() - 0.5) * 0.15, vy: (rand() - 0.5) * 0.15 });
+    }
+    // Background nuclei
+    for (let i = 0; i < area / 1500; i++) {
+      cells.push({ type: "nuclei", x: rand() * w, y: rand() * h, r: 1 + rand() * 1.2 });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const order = ["nuclei", "stroma", "tumour", "immune"];
+    order.forEach(type => {
+      ctx.fillStyle = colours[type];
+      ctx.globalAlpha = type === "nuclei" ? 0.35 : type === "stroma" ? 0.55 : 0.9;
+      ctx.shadowColor = colours[type];
+      ctx.shadowBlur = type === "nuclei" ? 0 : 6;
+      cells.forEach(c => {
+        if (c.type !== type) return;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    });
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  }
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = canvas.clientWidth; h = canvas.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    build();
+    draw();
+  }
+
+  function tick() {
+    cells.forEach(c => {
+      if (c.type !== "immune") return;
+      c.x += c.vx; c.y += c.vy;
+      if (c.x < 0 || c.x > w) c.vx *= -1;
+      if (c.y < 0 || c.y > h) c.vy *= -1;
+    });
+    draw();
+    requestAnimationFrame(tick);
+  }
+
+  let t;
+  window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(resize, 150); });
+  resize();
+  if (!reduce) requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
